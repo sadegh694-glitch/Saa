@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#071b2b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="اسناد مهندسی">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <title>مرکز اسناد مهندسی</title>
+  <style>
+    :root{--navy:#071b2b;--navy2:#0b2b42;--steel:#5d7484;--cyan:#19c3bd;--cyan2:#0e9d9a;--paper:#f3f7f9;--white:#fff;--line:#d8e3e8;--ink:#102734;--muted:#647985;--danger:#d84a4a;--shadow:0 16px 42px rgba(4,25,39,.14)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif}
+    body{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+    button,input{font:inherit}
+    .top{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:calc(24px + env(safe-area-inset-top)) 18px 26px;border-bottom:4px solid var(--cyan)}
+    .top:after{content:"";position:absolute;inset:auto -45px -105px auto;width:240px;height:240px;border:1px solid rgba(25,195,189,.28);border-radius:50%;box-shadow:0 0 0 28px rgba(25,195,189,.08),0 0 0 60px rgba(25,195,189,.04)}
+    .brand{position:relative;z-index:1;display:flex;gap:13px;align-items:center;max-width:900px;margin:auto}
+    .mark{width:52px;height:52px;border-radius:15px;background:linear-gradient(145deg,var(--cyan),#6fe0d8);display:grid;place-items:center;color:var(--navy);font-weight:900;box-shadow:0 10px 25px rgba(25,195,189,.24)}
+    .brand h1{font-size:21px;margin:0 0 5px}.brand p{margin:0;color:#bad0dc;font-size:13px;line-height:1.6}
+    main{max-width:900px;margin:auto;padding:18px 14px}
+    .tools{position:sticky;top:0;z-index:5;background:rgba(243,247,249,.92);backdrop-filter:blur(12px);padding:8px 0 12px}
+    .search{display:flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:0 5px 18px rgba(5,31,47,.06);padding:0 14px}
+    .search input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);padding:14px 10px;font-size:16px}
+    .search svg{width:20px;color:var(--steel)}
+    .chips{display:flex;gap:8px;overflow:auto;padding:11px 1px 1px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+    .chip{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--steel);padding:9px 13px;border-radius:999px;font-size:13px;font-weight:700}.chip.active{color:#fff;background:var(--navy2);border-color:var(--navy2)}
+    .section{margin:17px 0 24px}.section-title{display:flex;align-items:center;gap:9px;margin:0 3px 11px;font-size:15px;color:var(--navy2)}.section-title:before{content:"";width:5px;height:20px;border-radius:5px;background:var(--cyan)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+    .card{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px;box-shadow:0 7px 22px rgba(6,34,50,.055);transition:.18s}
+    .card:active{transform:scale(.985);border-color:var(--cyan)}
+    .pdf{width:48px;height:52px;border-radius:12px;background:#e8f6f5;color:var(--cyan2);display:grid;place-items:center;font-weight:900;font-size:12px;border:1px solid #c8e9e7}
+    .meta{min-width:0}.meta h3{font-size:14px;line-height:1.65;margin:0 0 2px;color:var(--ink)}.meta p{font-size:12px;line-height:1.55;margin:0;color:var(--muted)}
+    .actions{grid-column:1/-1;display:grid;grid-template-columns:1fr 44px;gap:8px;margin-top:2px}
+    .open,.share{border:0;border-radius:11px;min-height:42px;font-weight:800}.open{background:var(--navy2);color:#fff}.share{background:#e8f6f5;color:var(--cyan2);font-size:18px}
+    .empty{display:none;text-align:center;padding:50px 15px;color:var(--muted)}
+    .viewer{position:fixed;z-index:100;inset:0;background:#dfe7eb;display:none;flex-direction:column}.viewer.show{display:flex}
+    .viewerbar{flex:0 0 auto;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:calc(8px + env(safe-area-inset-top)) 10px 9px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+    .viewerbar button{width:44px;height:44px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-size:21px;font-weight:900}.viewer-title{text-align:center;min-width:0}.viewer-title strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}.viewer-title span{font-size:11px;color:#a9c2cf}
+    .framewrap{position:relative;flex:1;min-height:0}.frame{display:block;width:100%;height:100%;border:0;background:#fff}.loading{position:absolute;inset:0;display:grid;place-items:center;background:#edf2f4;color:var(--steel);font-weight:700}.loading.hide{display:none}
+    .viewerbottom{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;padding:9px 10px calc(9px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+    .viewerbottom button,.viewerbottom a{display:flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:12px;min-height:45px;font-weight:800}.viewerbottom button{background:#e8f6f5;color:var(--cyan2)}.viewerbottom a{background:var(--navy2);color:#fff}
+    .toast{position:fixed;z-index:200;right:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(50%) translateY(30px);background:#102734;color:#fff;padding:11px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow);font-size:13px}.toast.show{opacity:1;transform:translateX(50%) translateY(0)}
+    @media(max-width:680px){.grid{grid-template-columns:1fr}.card{border-radius:15px}.top{padding-inline:16px}.brand h1{font-size:19px}}
+    @media(min-width:681px){.viewer{inset:3vh 4vw;border-radius:20px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.3)}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="brand"><div class="mark">Ca</div><div><h1>مرکز اسناد مهندسی</h1><p>واحد کلر–آلکالی · دسترسی سریع، نمایش داخلی و اشتراک‌گذاری</p></div></div></header>
+  <main>
+    <div class="tools">
+      <label class="search" aria-label="جستجو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="جستجو در سرفصل‌ها…" autocomplete="off"></label>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div id="content"></div><div class="empty" id="empty">سندی با این عبارت پیدا نشد.</div>
+  </main>
+
+  <section class="viewer" id="viewer" aria-hidden="true">
+    <div class="viewerbar">
+      <button id="closeViewer" aria-label="بازگشت">×</button>
+      <div class="viewer-title"><strong id="viewerTitle">سند</strong><span>نمایشگر داخلی اسناد</span></div>
+      <button id="shareTop" aria-label="ارسال">↗</button>
+    </div>
+    <div class="framewrap"><div class="loading" id="loading">در حال بازکردن سند…</div><iframe class="frame" id="pdfFrame" title="نمایش PDF"></iframe></div>
+    <div class="viewerbottom"><button id="shareBottom">ارسال فایل</button><a id="external" href="#" target="_blank" rel="noopener">بازکردن در Safari</a></div>
+  </section>
+  <div class="toast" id="toast"></div>
+
+<script>
+const docs=[
+ {g:'نمای کلی و آموزش',c:'overview',t:'خلاصه جامع الکترولایزر',d:'ساختار، عملکرد و نکات کلیدی',f:'electrolyzer-summary.pdf'},
+ {g:'نمای کلی و آموزش',c:'overview',t:'خلاصه‌های موضوعی الکترولایزر',d:'مرور سریع موضوعات فرایندی',f:'electrolyzer-01-topic-summaries.pdf'},
+ {g:'نمای کلی و آموزش',c:'training',t:'جزوه آموزش اپراتوری',d:'آموزش مفاهیم اصلی واحد',f:'electrolyzer-05-operator-training-booklet.pdf'},
+ {g:'نمای کلی و آموزش',c:'training',t:'سؤال و جواب آموزشی',d:'مرور سریع دانش فنی',f:'operator-questions-answers.pdf'},
+ {g:'بهره‌برداری و راه‌اندازی',c:'operation',t:'پارامترهای عملیاتی',d:'نقاط پایش روزانه و شیفت',f:'electrolyzer-02-operating-parameters.pdf'},
+ {g:'بهره‌برداری و راه‌اندازی',c:'startup',t:'چک‌لیست راه‌اندازی و توقف',d:'مراحل شروع، توقف و انتقال وضعیت',f:'electrolyzer-04-startup-shutdown-checklist.pdf'},
+ {g:'بهره‌برداری و راه‌اندازی',c:'operation',t:'حالت‌های عملیاتی A تا F',d:'تعریف وضعیت‌های عملیاتی',f:'operating-modes-a-to-f.pdf'},
+ {g:'بهره‌برداری و راه‌اندازی',c:'startup',t:'راه‌اندازی راکتور HCl',d:'رویه عملیاتی راه‌اندازی',f:'hcl-reactor-startup.pdf'},
+ {g:'فرایند و تجهیزات',c:'process',t:'فلوچارت فرایندی',d:'مسیر جریان‌های اصلی واحد',f:'electrolyzer-03-process-flowchart.pdf'},
+ {g:'فرایند و تجهیزات',c:'process',t:'غلظت کاستیک و ولتاژ',d:'اثر غلظت سود بر عملکرد',f:'caustic-concentration-voltage.pdf'},
+ {g:'فرایند و تجهیزات',c:'process',t:'اختلاف دمای آب‌نمک و کاستیک',d:'تحلیل اختلاف دمای جریان‌ها',f:'brine-caustic-temperature-difference.pdf'},
+ {g:'فرایند و تجهیزات',c:'process',t:'مسیر هیدروژن تا Stack Reactor EDC',d:'مسیر و کاربرد هیدروژن',f:'hydrogen-route-edc-stack-reactor.pdf'},
+ {g:'فرایند و تجهیزات',c:'process',t:'نقش و عملکرد وکیوم پمپ',d:'کارکرد تجهیز در دکلریناسیون',f:'vacuum-pump-role.pdf'},
+ {g:'فرایند و تجهیزات',c:'process',t:'رکتیفایر و حفاظت‌ها',d:'جریان DC و حفاظت‌های مرتبط',f:'rectifier-protections.pdf'},
+ {g:'ایمنی، عیب‌یابی و بازرسی',c:'safety',t:'ریسک‌های HSE',d:'ریسک‌های ایمنی و محیط‌زیست',f:'hse-risks.pdf'},
+ {g:'ایمنی، عیب‌یابی و بازرسی',c:'safety',t:'عیب‌یابی Cause & Effect',d:'رابطه علت و اثر رخدادها',f:'electrolyzer-06-troubleshooting-cause-effect.pdf'},
+ {g:'ایمنی، عیب‌یابی و بازرسی',c:'safety',t:'نشتی سل الکترولایزر',d:'تشخیص و اقدام عملیاتی',f:'cell-leakage-electrolyzer.pdf'},
+ {g:'ایمنی، عیب‌یابی و بازرسی',c:'safety',t:'ناخالصی‌های آسیب‌زا به ممبرین',d:'ناخالصی‌ها و پیامدهای فرایندی',f:'membrane-harmful-impurities.pdf'},
+ {g:'ایمنی، عیب‌یابی و بازرسی',c:'safety',t:'رویه Bubble Test I',d:'تست حباب مرحله اول',f:'bubble-test-1-procedure.pdf'},
+ {g:'ایمنی، عیب‌یابی و بازرسی',c:'safety',t:'رویه Bubble Test II',d:'تست حباب مرحله دوم',f:'bubble-test-2-procedure.pdf'},
+ {g:'منابع و داده‌های مهندسی',c:'reference',t:'واژه‌نامه فنی',d:'تعریف اصطلاحات مهم واحد',f:'technical-glossary.pdf'},
+ {g:'منابع و داده‌های مهندسی',c:'reference',t:'فرمت‌های خروجی و فرم‌ها',d:'قالب‌های مورد استفاده روزانه',f:'output-formats-forms.pdf'},
+ {g:'منابع و داده‌های مهندسی',c:'reference',t:'داده‌های عددی کلیدی',d:'مقادیر مهم طراحی و بهره‌برداری',f:'key-numerical-data.pdf'}
+];
+const cats=[['all','همه'],['overview','نمای کلی'],['operation','بهره‌برداری'],['process','فرایند'],['startup','راه‌اندازی'],['training','آموزش'],['safety','ایمنی و عیب‌یابی'],['reference','مرجع']];
+let active='all',current=null;
+const $=s=>document.querySelector(s), content=$('#content'), empty=$('#empty'), viewer=$('#viewer'), frame=$('#pdfFrame');
+function safe(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderChips(){ $('#chips').innerHTML=cats.map(([k,v])=>`<button class="chip ${active===k?'active':''}" data-c="${k}">${v}</button>`).join('') }
+function render(){
+ const q=$('#q').value.trim().toLowerCase();
+ const list=docs.filter(x=>(active==='all'||x.c===active)&&(`${x.t} ${x.d} ${x.g}`.toLowerCase().includes(q)));
+ const groups=[...new Set(list.map(x=>x.g))];
+ content.innerHTML=groups.map(g=>`<section class="section"><h2 class="section-title">${safe(g)}</h2><div class="grid">${list.filter(x=>x.g===g).map((x,i)=>{const idx=docs.indexOf(x);return `<article class="card"><div class="pdf">PDF</div><div class="meta"><h3>${safe(x.t)}</h3><p>${safe(x.d)}</p></div><div class="actions"><button class="open" data-open="${idx}">بازکردن سند</button><button class="share" data-share="${idx}" aria-label="ارسال ${safe(x.t)}">↗</button></div></article>`}).join('')}</div></section>`).join('');
+ empty.style.display=list.length?'none':'block'; renderChips();
+}
+function fileURL(doc){return new URL('./'+encodeURIComponent(doc.f),location.href).href}
+function openDoc(i){
+ current=docs[i]; const url=fileURL(current);
+ $('#viewerTitle').textContent=current.t; $('#external').href=url; $('#loading').classList.remove('hide');
+ frame.src=url+'#view=FitH'; viewer.classList.add('show'); viewer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+ history.pushState({viewer:true},'',location.pathname+location.search+'#document');
+}
+function closeDoc(fromPop=false){
+ frame.src='about:blank'; viewer.classList.remove('show'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; current=null;
+ if(!fromPop&&location.hash==='#document') history.back();
+}
+async function shareDoc(doc){
+ const url=fileURL(doc), data={title:doc.t,text:`سند مهندسی: ${doc.t}`,url};
+ try{if(navigator.share){await navigator.share(data)}else{await navigator.clipboard.writeText(url);toast('لینک فایل کپی شد')}}catch(e){if(e.name!=='AbortError'){try{await navigator.clipboard.writeText(url);toast('لینک فایل کپی شد')}catch(_){prompt('لینک فایل را کپی کنید:',url)}}}
+}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
+content.addEventListener('click',e=>{const o=e.target.closest('[data-open]'),s=e.target.closest('[data-share]');if(o)openDoc(+o.dataset.open);if(s)shareDoc(docs[+s.dataset.share])});
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b){active=b.dataset.c;render()}});
+$('#q').addEventListener('input',render); frame.addEventListener('load',()=>{if(frame.src!=='about:blank')$('#loading').classList.add('hide')});
+$('#closeViewer').addEventListener('click',()=>closeDoc()); $('#shareTop').addEventListener('click',()=>current&&shareDoc(current)); $('#shareBottom').addEventListener('click',()=>current&&shareDoc(current));
+window.addEventListener('popstate',()=>{if(viewer.classList.contains('show'))closeDoc(true)});
+if(location.hash==='#document')history.replaceState({},'',location.pathname+location.search);
+render();
+</script>
+</body>
+</html>
